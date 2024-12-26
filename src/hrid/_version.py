@@ -13,5 +13,5 @@ if not __version__:
 
         __version__ = importlib.metadata.version("hrid")
     else:
-        PROJECT_DIR = Path(__file__).parent.parent
+        PROJECT_DIR = Path(__file__).parents[2]
         __version__ = versioningit.get_version(project_dir=PROJECT_DIR)

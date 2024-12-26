@@ -31,11 +31,14 @@ repository = "https://github.com/evelyn-king/hrid"
 content-type = "text/markdown"
 file = "README.md"
 
+[tool.setuptools.package-data]
+"*" = ["*.yaml"]
+
 [tool.hatch.version]
 source = "versioningit"
 
 [tool.hatch.build.targets.wheel]
-packages = ["hrid"]
+sources = ["src"]
 
 [tool.hatch.build.hooks.versioningit-onbuild]
 build-file = "src/hrid/_version.py"
