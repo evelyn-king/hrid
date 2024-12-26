@@ -1,0 +1,89 @@
+[build-system]
+build-backend = "hatchling.build"
+requires = ["hatchling", "versioningit"]
+
+[project]
+name = "hrid"
+description = "A Python library for generating human readable ids"
+requires-python = ">=3.10"
+dynamic = ["version"]
+maintainers = [
+    { name = "Evelyn King", email = "evelyn@evieking.com" }
+]
+license = { text = "MIT" }
+dependencies = [
+   "ruamel.yaml"
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+    "versioningit"
+]
+all = ["hrid[test]"]
+
+[project.urls]
+homepage = "https://github.com/evelyn-king/hrid"
+documentation = "https://github.com/evelyn-king/hrid"
+repository = "https://github.com/evelyn-king/hrid"
+
+[project.readme]
+content-type = "text/markdown"
+file = "README.md"
+
+[tool.hatch.version]
+source = "versioningit"
+
+[tool.hatch.build.targets.wheel]
+packages = ["hrid"]
+
+[tool.hatch.build.hooks.versioningit-onbuild]
+build-file = "src/hrid/_version.py"
+source-file = "src/hrid/_version.py"
+
+[tool.versioningit]
+default-version = "0.0.0"
+
+[tool.versioningit.vcs]
+method = "git"
+match = ["v*"]
+default-tag = "0.0.0"
+
+[tool.versioningit.format]
+dirty = "{version}.dev{distance}+{branch}.{vcs}{rev}.dirty"
+distance = "{version}.dev{distance}+{branch}.{vcs}{rev}"
+distance-dirty = "{version}.dev{distance}+{branch}.{vcs}{rev}.dirty"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "T20",     # flake8-print
+    "S101",    # Use of assert detected
+    "PD901",   # df is a bad variable name. Be kinder to your future self.
+    "ANN204",   # Missing return type annotation for special methods
+    "ANN401",  # Dynamically typed expressions (typing.Any) are disallowed in {name}
+    "D402",    # First line should not be the function's signature
+    "PLW0603", # Using the global statement to update `X` is discouraged
+    "D401",    # First line of docstring should be in imperative mood
+    "SLF001",  # Private member accessed
+    "S603",    # `subprocess` call: check for execution of untrusted input
+    "S607",    # Starting a process with a partial executable path
+    "PLR0913", # Too many arguments to function call (N > 5)
+    "TD002",   # Missing author in TODO; try: `# TODO(<author_name>): ...`
+    "TD003",   # Missing issue link on the line following this TODO
+    "FIX002",  # Line contains TODO"
+    "E501",    # Line too long
+    "D105",    # Missing docstring in magic method
+    "D107",    # Missing docstring in `__init__`
+    "B905",    # `zip()` without an explicit `strict=` parameter
+]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 18
+
+[tool.mypy]
+python_version = "3.10"

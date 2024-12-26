@@ -1,0 +1,15 @@
+name: hrid
+
+channels:
+  - conda-forge
+
+dependencies:
+  - python=3.10
+  - pip
+  - wheel
+  - pre-commit
+  - ruamel.yaml
+  - ruff
+  - mypy
+  - pytest
+  - versioningit
