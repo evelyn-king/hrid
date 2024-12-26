@@ -18,6 +18,7 @@ dependencies = [
 [project.optional-dependencies]
 test = [
     "pytest",
+    "pytest-datadir",
     "versioningit"
 ]
 all = ["hrid[test]"]
@@ -62,27 +63,17 @@ line-length = 100
 target-version = "py310"
 
 [tool.ruff.lint]
-select = ["ALL"]
+select = ["B", "C", "D", "E", "F", "W", "T", "B9", "I", "UP"]
 ignore = [
-    "T20",     # flake8-print
-    "S101",    # Use of assert detected
-    "PD901",   # df is a bad variable name. Be kinder to your future self.
-    "ANN204",   # Missing return type annotation for special methods
-    "ANN401",  # Dynamically typed expressions (typing.Any) are disallowed in {name}
-    "D402",    # First line should not be the function's signature
-    "PLW0603", # Using the global statement to update `X` is discouraged
-    "D401",    # First line of docstring should be in imperative mood
-    "SLF001",  # Private member accessed
-    "S603",    # `subprocess` call: check for execution of untrusted input
-    "S607",    # Starting a process with a partial executable path
-    "PLR0913", # Too many arguments to function call (N > 5)
-    "TD002",   # Missing author in TODO; try: `# TODO(<author_name>): ...`
-    "TD003",   # Missing issue link on the line following this TODO
-    "FIX002",  # Line contains TODO"
-    "E501",    # Line too long
+    "B905",    # `zip()` without an explicit `strict=` parameter
     "D105",    # Missing docstring in magic method
     "D107",    # Missing docstring in `__init__`
-    "B905",    # `zip()` without an explicit `strict=` parameter
+    "D203",    # Blank line before class
+    "D213",    # Summary on first line of docstring
+    "D402",    # First line should not be the function's signature
+    "D401",    # First line of docstring should be in imperative mood
+    "E501",    # Line too long
+    "T20",     # flake8-print
 ]
 
 [tool.ruff.lint.mccabe]

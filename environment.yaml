@@ -13,3 +13,5 @@ dependencies:
   - mypy
   - pytest
   - versioningit
+  - pip:
+    - pytest-datadir

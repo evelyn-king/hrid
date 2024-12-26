@@ -11,12 +11,12 @@ class WordSet:
     """A set of words."""
 
     def __init__(self, words: Sequence[str]):
-        self.__words = tuple(set(words))
+        self.__words = tuple(sorted(set(words)))
 
     @property
     def words(self) -> set[str]:
         """The set of words in this WordSet."""
-        return self.__words()
+        return self.__words
 
     @classmethod
     def from_yaml(cls, word_file: str | Path) -> "WordSet":
@@ -24,10 +24,10 @@ class WordSet:
         if isinstance(word_file, str):
             word_file = Path(word_file)
         loader = YAML(typ="safe")
-        with word_file.open(word_file, encoding="utf-8") as fp:
+        with word_file.open(encoding="utf-8") as fp:
             word_list = loader.load(fp)
         del loader
-        return word_list
+        return cls(word_list)
 
 
 class Dictionary(Mapping):
