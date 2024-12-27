@@ -15,3 +15,8 @@ dependencies:
   - nox
   - pytest
   - pytest-datadir
+  # optional-dependencies: docs
+  - sphinx
+  - numpydoc
+  - sphinx-autodoc-typehints
+  - sphinx_autosummary_accessors
