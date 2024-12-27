@@ -1,6 +1,9 @@
 # hrid
 Generate human readable ids using python.
 
+[![pytest](https://github.com/evelyn-king/hrid/actions/workflows/pytest-runs.yaml/badge.svg)](https://github.com/evelyn-king/hrid/actions/workflows/pytest-runs.yaml)
+
+
 <!-- toc start -->
 ## Table of Contents
 
