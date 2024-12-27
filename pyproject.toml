@@ -23,6 +23,9 @@ test = [
 ]
 all = ["hrid[test]"]
 
+[project.scripts]
+hrid = "hrid.cli:main"
+
 [project.urls]
 homepage = "https://github.com/evelyn-king/hrid"
 documentation = "https://github.com/evelyn-king/hrid"
