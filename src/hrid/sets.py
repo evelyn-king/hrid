@@ -19,10 +19,18 @@ class WordSet:
         return self.__words
 
     @classmethod
+    def from_file(cls, word_file: str | Path) -> "WordSet":
+        """Load a WordSet from a file."""
+        word_file = _normalize_path(word_file)
+        if word_file.suffix in [".yml", ".yaml"]:
+            return cls.from_yaml(word_file)
+        else:
+            raise ValueError(f"Unsupported extension {word_file.suffix}")
+
+    @classmethod
     def from_yaml(cls, word_file: str | Path) -> "WordSet":
         """Load a WordSet from a yaml file."""
-        if isinstance(word_file, str):
-            word_file = Path(word_file)
+        word_file = _normalize_path(word_file)
         loader = YAML(typ="safe")
         with word_file.open(encoding="utf-8") as fp:
             word_list = loader.load(fp)
@@ -37,6 +45,18 @@ class Dictionary(Mapping):
         if starting_dict is None:
             starting_dict = {}
         self.__dictionary = deepcopy(starting_dict)
+
+    @classmethod
+    def from_directory(cls, directory: str | Path) -> "Dictionary":
+        """Load a dictionary from a directory of files."""
+        directory = _normalize_path(directory)
+        if not directory.is_dir():
+            raise ValueError("Please specify a directory")
+        word_sets = {}
+        file_list = [path for path in directory.iterdir() if path.is_file()]
+        for path in file_list:
+            word_sets[path.stem] = WordSet.from_file(path)
+        return Dictionary(word_sets)
 
     def __getitem__(self, key: Hashable) -> WordSet:
         return self.__dictionary[key]
@@ -61,3 +81,10 @@ class Dictionary(Mapping):
             msg = f"Key: {key} is not in this WordSet"
             raise KeyError(msg)
         del self.__dictionary[key]
+
+
+def _normalize_path(path: str | Path) -> Path:
+    if isinstance(path, str):
+        return Path(path)
+    else:
+        return path

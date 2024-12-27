@@ -32,3 +32,9 @@ def test_yaml_loader(datadir: Path, sample_word_set: WordSet):
     test_file = datadir / "sample.yaml"
     loaded_word_set = WordSet.from_yaml(test_file)
     assert sample_word_set.words == loaded_word_set.words
+
+
+def test_loading_error(datadir: Path):
+    """Ensure a value error is raised for an unsupported extension."""
+    with pytest.raises(ValueError, match=".csv"):
+        _ = WordSet.from_file(datadir / "bad_data.csv")
