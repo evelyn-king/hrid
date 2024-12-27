@@ -48,7 +48,7 @@ class HRIDGenerator:
         self.generator = random.Random(seed)
 
 
-def hrid(seed: int | None):
+def hrid(seed: int | None = None):
     """Generate a pseudorandom hrid."""
     generator = HRIDGenerator(seed=seed)
     return generator.hrid()
