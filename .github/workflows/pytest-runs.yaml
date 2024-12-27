@@ -14,20 +14,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Add conda to system path
+    - name: Update Python version in environment.yaml
       run: |
-        # $CONDA is an environment variable pointing to the root of the miniconda directory
-        echo $CONDA/bin >> $GITHUB_PATH
-    - name: Update Python version in environment.yml
-      run: |
-        sed -i 's/- python/- python=${{ matrix.python-version }}/g' environment.yaml
+        sed -i '/^\s*-\s*python\s*$/ s/$/=${{ matrix.python-version }}/' environment.yaml
         echo "Updated environment.yaml content:"
         cat environment.yaml
-    - name: Install Conda with micromamba
+    - name: Install environment with micromamba
       uses: mamba-org/setup-micromamba@v2
       with:
         environment-file: environment.yaml
@@ -37,6 +29,7 @@ jobs:
       run: |
         python -m pip install -e ".[test]"
     - name: Test with pytest
+      shell: bash -l {0}
       run: |
         python -c "import hrid; print(hrid.__version__)"
         pytest
