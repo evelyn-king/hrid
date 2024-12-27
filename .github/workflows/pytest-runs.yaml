@@ -1,0 +1,48 @@
+name: pytest using micromamba
+
+on:
+  pull_request:
+  push:
+    branches: main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Add conda to system path
+      run: |
+        # $CONDA is an environment variable pointing to the root of the miniconda directory
+        echo $CONDA/bin >> $GITHUB_PATH
+    - name: Update Python version in environment.yml
+      run: |
+        sed -i 's/- python/- python=${{ matrix.python-version }}/g' environment.yaml
+        echo "Updated environment.yaml content:"
+        cat environment.yaml
+    - name: Install Conda with micromamba
+      uses: mamba-org/setup-micromamba@v2
+      with:
+        environment-file: environment.yaml
+        cache-environment: true
+    - name: Install hrid
+      shell: bash -l {0}
+      run: |
+        python -m pip install -e ".[test]"
+    - name: Quick code quality checks
+      run: |
+        micromamba install flake8
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Test with pytest
+      run: |
+        pytest
