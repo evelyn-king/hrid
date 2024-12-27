@@ -7,11 +7,12 @@ dependencies:
   - python=3.10
   - pip
   - wheel
-  - pre-commit
   - ruamel.yaml
-  - ruff
-  - mypy
-  - pytest
   - versioningit
-  - pip:
-    - pytest-datadir
+  # testing
+  - mypy
+  - pre-commit
+  - ruff
+  - pytest
+  - pytest-datadir
+  - nox

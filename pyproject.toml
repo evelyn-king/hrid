@@ -12,16 +12,25 @@ maintainers = [
 ]
 license = { text = "MIT" }
 dependencies = [
-   "ruamel.yaml"
+    "pip",
+    "ruamel.yaml",
+    "versioningit",
+    "wheel"
 ]
 
 [project.optional-dependencies]
 test = [
+    "nox",
     "pytest",
     "pytest-datadir",
-    "versioningit"
 ]
-all = ["hrid[test]"]
+docs = [
+    "sphinx",
+    "numpydoc",
+    "sphinx-autodoc-typehints",
+    "sphinx_autosummary_accessors"
+]
+all = ["hrid[test,docs]"]
 
 [project.scripts]
 hrid = "hrid.cli:main"

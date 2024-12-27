@@ -13,7 +13,22 @@ DEFAULT_WORD_ORDER = ("numbers", "adjectives", "nouns", "verbs", "adverbs")
 
 
 class HRIDGenerator:
-    """A generator class for human readable ids (hrid)."""
+    """A generator class for human readable ids (hrid).
+
+    Parameters
+    ----------
+    dictionary
+        A dictionary of WordSets that underpin the generator.
+    seed
+        The seed to provide to the internal random number generator.
+    word_order
+        A sequence of word types to use for phrase generation. Must be
+        keys of ``dictionary`` or "numbers".
+    word_separator
+        The character to use to separate the words in the phrase. By
+        default "-".
+
+    """
 
     def __init__(
         self,
@@ -33,7 +48,14 @@ class HRIDGenerator:
         self.max_int: int = 512
 
     def hrid(self) -> str:
-        """Generate a pseudorandom id phrase."""
+        """Generate a pseudorandom id phrase.
+
+        Returns
+        -------
+        str
+            The generated phrase with each word given by the initial word order.
+
+        """
         phrase_list = []
         for word_type in self.word_order:
             if word_type == "numbers":
@@ -44,11 +66,36 @@ class HRIDGenerator:
         return self.separator.join(phrase_list)
 
     def reseed(self, seed: int | None = None):
-        """Re-initialize the random number generator."""
+        """Re-initialize the random number generator.
+
+        Parameters
+        ----------
+        seed
+            The seed to provide to the internal random number generator.
+
+        """
         self.generator = random.Random(seed)
 
 
 def hrid(seed: int | None = None):
-    """Generate a pseudorandom hrid."""
+    """Generate a pseudorandom hrid.
+
+    This uses the default generator.
+
+    Parameters
+    ----------
+    seed
+        The seed to provide to the internal random number generator.
+
+    Returns
+    -------
+    str
+        The generated phrase with each word given by the initial word order.
+
+    See Also
+    --------
+    HRIDGenerator
+
+    """
     generator = HRIDGenerator(seed=seed)
     return generator.hrid()

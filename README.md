@@ -1,9 +1,19 @@
 # hrid
 Generate human readable ids using python.
 
+<!-- toc start -->
+## Table of Contents
+
+- [hrid](#hrid)
+  - [Purpose](#purpose)
+  - [Installation](#installation)
+  - [Development](#development)
+
+<!-- toc end -->
+
 ## Purpose
 
-Heavily inspired [Asana's naming scheme](https://asana.com/inside-asana/6-sad-squid-snuggle-softly), this package contains the tools to generate random phrases that represent nearly-unique ids for objects.
+Heavily inspired by [Asana's naming scheme](https://asana.com/inside-asana/6-sad-squid-snuggle-softly), this package contains the tools to generate random phrases that represent nearly-unique ids for objects.
 
 ## Installation
 

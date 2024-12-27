@@ -6,7 +6,7 @@ from hrid import hrid
 
 
 def main():
-    """Define the parse for the hrid CLI."""
+    """Define the parser for the ``hrid`` CLI."""
     parser = argparse.ArgumentParser(prog="hrid", description="Generate a human readable id.")
     parser.add_argument("--seed", default=None)
     args = parser.parse_args()
